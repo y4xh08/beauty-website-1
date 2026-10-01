@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart | YASH MART</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/cart.css">
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="container top-header">
+
+        <a href="../index.html" class="logo">
+            YASH <span>MART</span>
+        </a>
+
+        <div class="search-box">
+            <input
+                type="text"
+                placeholder="Search beauty products..."
+            >
+            <button>⌕</button>
+        </div>
+
+        <div class="header-actions">
+
+            <a href="wishlist.html" class="header-btn">
+                <span>♡</span>
+                <small>Wishlist</small>
+            </a>
+
+            <a href="cart.html" class="header-btn cart-button">
+                <span>🛒</span>
+                <small>Cart</small>
+                <b id="cartCount">0</b>
+            </a>
+
+        </div>
+
+    </div>
+
+    <nav class="nav">
+        <div class="container nav-inner">
+            <a href="../index.html">Home</a>
+            <a href="../index.html#categories">Categories</a>
+            <a href="../index.html#featured">Featured</a>
+            <a href="../index.html#offers">Offers</a>
+        </div>
+    </nav>
+
+</header>
+
+<main>
+
+<section class="cart-section">
+
+    <div class="container">
+
+        <div class="page-heading">
+            <p class="eyebrow">YASH MART</p>
+            <h1>Shopping Cart</h1>
+            <p id="cartItemsText">Your selected products</p>
+        </div>
+
+        <div id="cartEmpty" class="empty-state">
+
+            <div class="empty-icon">🛒</div>
+
+            <h2>Your cart is empty</h2>
+
+            <p>
+                Add some beauty products to your cart.
+            </p>
+
+            <a
+                href="../index.html#categories"
+                class="primary-btn">
+                Start Shopping
+            </a>
+
+        </div>
+
+        <div id="cartContent" class="cart-layout">
+
+            <div class="cart-products" id="cartProducts"></div>
+
+            <aside class="cart-summary">
+
+                <h2>Order Summary</h2>
+
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <strong id="cartSubtotal">₹0</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Delivery</span>
+                    <strong>FREE</strong>
+                </div>
+
+                <div class="summary-line"></div>
+
+                <div class="summary-total">
+                    <span>Total</span>
+                    <strong id="cartTotal">₹0</strong>
+                </div>
+
+                <button
+                    class="checkout-btn"
+                    id="checkoutBtn">
+                    Proceed to Checkout
+                </button>
+
+                <a
+                    href="../index.html#categories"
+                    class="continue-shopping">
+                    ← Continue Shopping
+                </a>
+
+            </aside>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="../data/products.js"></script>
+<script src="../js/cart.js"></script>
+
+<script>
+
+const cartProducts =
+    document.getElementById("cartProducts");
+
+const cartContent =
+    document.getElementById("cartContent");
+
+const cartEmpty =
+    document.getElementById("cartEmpty");
+
+const cartSubtotal =
+    document.getElementById("cartSubtotal");
+
+const cartTotal =
+    document.getElementById("cartTotal");
+
+const cartItemsText =
+    document.getElementById("cartItemsText");
+
+function renderCart() {
+
+    const cart = getCart();
+
+    if (cart.length === 0) {
+
+        cartEmpty.style.display = "block";
+        cartContent.style.display = "none";
+
+        cartItemsText.textContent =
+            "Your cart is currently empty";
+
+        return;
+    }
+
+    cartEmpty.style.display = "none";
+    cartContent.style.display = "grid";
+
+    cartItemsText.textContent =
+        `${getCartItemsCount()} item(s) in your cart`;
+
+    cartProducts.innerHTML = "";
+
+    cart.forEach(product => {
+
+        const item =
+            document.createElement("div");
+
+        item.className = "cart-item";
+
+        item.innerHTML = `
+
+            <div class="cart-product-image">
+                ${product.image}
+            </div>
+
+            <div class="cart-product-info">
+
+                <span class="cart-brand">
+                    ${product.brand}
+                </span>
+
+                <h3>${product.name}</h3>
+
+                <p>${product.type}</p>
+
+                <strong>
+                    ${formatCartPrice(product.price)}
+                </strong>
+
+            </div>
+
+            <div class="quantity-control">
+
+                <button
+                    onclick="updateQuantity(${product.id}, -1)">
+                    −
+                </button>
+
+                <span>${product.quantity}</span>
+
+                <button
+                    onclick="updateQuantity(${product.id}, 1)">
+                    +
+                </button>
+
+            </div>
+
+            <div class="cart-item-total">
+                ${formatCartPrice(
+                    product.price * product.quantity
+                )}
+            </div>
+
+            <button
+                class="remove-cart"
+                onclick="removeFromCart(${product.id})">
+                Remove
+            </button>
+
+        `;
+
+        cartProducts.appendChild(item);
+    });
+
+    const total = getCartTotal();
+
+    cartSubtotal.textContent =
+        formatCartPrice(total);
+
+    cartTotal.textContent =
+        formatCartPrice(total);
+}
+
+document
+    .getElementById("checkoutBtn")
+    .addEventListener("click", () => {
+
+        if (getCart().length === 0) {
+            showToast("Your cart is empty");
+            return;
+        }
+
+        window.location.href =
+            "checkout.html";
+    });
+
+renderCart();
+updateCartCount();
+
+</script>
+
+</body>
+</html>

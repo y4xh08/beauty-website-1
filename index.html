@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Glow Cart - Beauty and Personal Care">
+    <title>Glow Cart | Beauty & Personal Care</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/products.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="container top-header">
+
+        <a href="index.html" class="logo">
+            GLOW <span>CART</span>
+        </a>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search beauty products...">
+            <button id="searchBtn">⌕</button>
+        </div>
+
+        <div class="header-actions">
+
+            <div class="account-wrapper">
+    <button class="header-btn account-btn" id="accountBtn" type="button">
+        <span>👤</span>
+        <small id="accountText">Login</small>
+    </button>
+
+    <div class="account-menu" id="accountMenu">
+        <a href="pages/login.html" id="loginLink">Login</a>
+        <a href="pages/register.html" id="registerLink">Register</a>
+
+        <a href="pages/orders.html" id="ordersLink" style="display:none;">
+            My Orders
+        </a>
+
+        <button id="logoutBtn" style="display:none;">
+            Logout
+        </button>
+    </div>
+</div>
+
+            <a href="pages/orders.html" class="header-btn">
+                <span>📦</span>
+                <small>Orders</small>
+            </a>
+
+            <a href="pages/wishlist.html" class="header-btn" id="wishlistBtn">
+                <span>♡</span>
+                <small>Wishlist</small>
+            </a>
+
+            <a href="pages/cart.html" class="header-btn cart-button" id="cartBtn">
+                <span>🛒</span>
+                <small>Cart</small>
+                <b id="cartCount">0</b>
+            </a>
+
+        </div>
+
+    </div>
+
+    <nav class="nav">
+        <div class="container nav-inner">
+            <a href="#home">Home</a>
+            <a href="#categories">Categories</a>
+            <a href="#productsSection">Products</a>
+            <a href="#offers">Offers</a>
+            <a href="#footer">Contact</a>
+        </div>
+    </nav>
+
+</header>
+
+<main>
+
+<section class="hero" id="home">
+    <div class="container hero-content">
+
+        <div class="hero-text">
+            <p class="eyebrow">GLOW CART BEAUTY</p>
+
+            <h1>
+                Beauty that makes
+                <span>you feel confident.</span>
+            </h1>
+
+            <p>
+                Discover makeup, skincare, haircare, body care and fragrances
+                from brands you love.
+            </p>
+
+            <a href="#categories" class="primary-btn">
+                Explore Beauty
+            </a>
+        </div>
+
+        <div class="hero-visual">
+            <div class="circle circle-one"></div>
+            <div class="circle circle-two"></div>
+
+            <div class="beauty-card">
+                <div class="beauty-icon">💄</div>
+                <strong>BEAUTY</strong>
+                <span>& Personal Care</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="categories" id="categories">
+    <div class="container">
+
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">SHOP BEAUTY</p>
+                <h2>Categories</h2>
+            </div>
+        </div>
+
+        <div class="category-grid">
+
+            <button class="category-card" data-category="Makeup">
+                <div class="category-icon">💄</div>
+                <h3>Makeup</h3>
+                <p>Beauty & makeup essentials</p>
+            </button>
+
+            <button class="category-card" data-category="Skincare">
+                <div class="category-icon">🧴</div>
+                <h3>Skincare</h3>
+                <p>Care for healthy skin</p>
+            </button>
+
+            <button class="category-card" data-category="Hair Care">
+                <div class="category-icon">💇</div>
+                <h3>Hair Care</h3>
+                <p>Hair care essentials</p>
+            </button>
+
+            <button class="category-card" data-category="Body Care">
+                <div class="category-icon">🛁</div>
+                <h3>Body Care</h3>
+                <p>Everyday body care</p>
+            </button>
+
+            <button class="category-card" data-category="Fragrance">
+                <div class="category-icon">🌸</div>
+                <h3>Fragrance</h3>
+                <p>Perfumes & body mists</p>
+            </button>
+
+            <button class="category-card" data-category="Personal Care">
+                <div class="category-icon">✨</div>
+                <h3>Personal Care</h3>
+                <p>Daily care products</p>
+            </button>
+
+        </div>
+
+    </div>
+</section>
+
+<section class="subcategory-section">
+    <div class="container">
+
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">EXPLORE</p>
+                <h2>Shop by Category</h2>
+            </div>
+        </div>
+
+        <div class="subcategory-layout">
+
+            <div class="subcategory-menu">
+
+                <button class="subcategory-item active" data-main="Makeup">
+                    <span>💄</span>
+                    <div>
+                        <strong>Makeup</strong>
+                        <small>Face, Eyes & Lips</small>
+                    </div>
+                </button>
+
+                <button class="subcategory-item" data-main="Skincare">
+                    <span>🧴</span>
+                    <div>
+                        <strong>Skincare</strong>
+                        <small>Face & Skin Care</small>
+                    </div>
+                </button>
+
+                <button class="subcategory-item" data-main="Hair Care">
+                    <span>💇</span>
+                    <div>
+                        <strong>Hair Care</strong>
+                        <small>Hair Essentials</small>
+                    </div>
+                </button>
+
+                <button class="subcategory-item" data-main="Body Care">
+                    <span>🛁</span>
+                    <div>
+                        <strong>Body Care</strong>
+                        <small>Body Essentials</small>
+                    </div>
+                </button>
+
+                <button class="subcategory-item" data-main="Fragrance">
+                    <span>🌸</span>
+                    <div>
+                        <strong>Fragrance</strong>
+                        <small>Perfume & Mists</small>
+                    </div>
+                </button>
+
+            </div>
+
+            <div class="subcategory-content">
+
+                <div class="subcategory-header">
+                    <div>
+                        <p class="eyebrow">MAKEUP</p>
+                        <h3>Choose a subcategory</h3>
+                    </div>
+                </div>
+
+                <div class="subcategory-grid" id="subcategoryGrid"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<section class="products-section" id="productsSection">
+    <div class="container">
+
+        <div class="products-header">
+            <div>
+                <p class="eyebrow">GLOW CART BEAUTY</p>
+                <h2 id="productsTitle">Beauty Products</h2>
+                <p id="productsDescription">Explore our beauty collection</p>
+            </div>
+
+            <div class="product-controls">
+                <select id="sortProducts">
+                    <option value="default">Sort By</option>
+                    <option value="low">Price: Low to High</option>
+                    <option value="high">Price: High to Low</option>
+                    <option value="rating">Highest Rated</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="brand-filter" id="brandFilter"></div>
+
+        <div class="products-grid" id="productsGrid"></div>
+
+        <div class="no-products" id="noProducts">
+            <div class="empty-icon">🔍</div>
+            <h3>No products found</h3>
+            <p>Try another category or brand.</p>
+        </div>
+
+    </div>
+</section>
+
+<section class="offers" id="offers">
+    <div class="container offer-box">
+
+        <div>
+            <p class="eyebrow">GLOW CART</p>
+            <h2>Beauty essentials in one place.</h2>
+            <p>
+                Shop your favourite beauty and personal care products
+                with a simple shopping experience.
+            </p>
+        </div>
+
+        <a href="#categories" class="primary-btn">
+            Start Shopping
+        </a>
+
+    </div>
+</section>
+
+</main>
+
+<footer class="footer" id="footer">
+    <div class="container footer-content">
+
+        <div>
+            <a href="index.html" class="logo footer-logo">
+                GLOW <span>CART</span>
+            </a>
+
+            <p>
+                Beauty & Personal Care shopping made simple.
+            </p>
+        </div>
+
+        <div class="footer-links">
+            <a href="#home">Home</a>
+            <a href="#categories">Categories</a>
+            <a href="#productsSection">Products</a>
+            <a href="#offers">Offers</a>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 Glow Cart. All rights reserved.
+    </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="data/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/app.js"></script>
+<script src="js/products.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const accountBtn = document.getElementById("accountBtn");
+    const accountMenu = document.getElementById("accountMenu");
+    const accountText = document.getElementById("accountText");
+
+    const loginLink = document.getElementById("loginLink");
+    const registerLink = document.getElementById("registerLink");
+    const ordersLink = document.getElementById("ordersLink");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    const loggedIn = localStorage.getItem("glowCartLoggedIn");
+    const user = JSON.parse(localStorage.getItem("glowCartUser"));
+
+    accountBtn.addEventListener("click", function (event) {
+        event.stopPropagation();
+        accountMenu.classList.toggle("show");
+    });
+
+    accountMenu.addEventListener("click", function (event) {
+        event.stopPropagation();
+    });
+
+    document.addEventListener("click", function () {
+        accountMenu.classList.remove("show");
+    });
+
+    if (loggedIn === "true" && user) {
+
+        accountText.textContent = user.name;
+
+        loginLink.style.display = "none";
+        registerLink.style.display = "none";
+
+        ordersLink.style.display = "block";
+        logoutBtn.style.display = "block";
+
+    } else {
+
+        accountText.textContent = "Login";
+
+        loginLink.style.display = "block";
+        registerLink.style.display = "block";
+
+        ordersLink.style.display = "none";
+        logoutBtn.style.display = "none";
+    }
+
+    logoutBtn.addEventListener("click", function () {
+
+        localStorage.removeItem("glowCartLoggedIn");
+
+        window.location.reload();
+    });
+
+});
+</script>
+
+</body>
+</html>

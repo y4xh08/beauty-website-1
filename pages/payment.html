@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Payment | YASH MART</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        .payment-section {
+            padding: 55px 0 80px;
+            background: #fcfafb;
+            min-height: 75vh;
+        }
+
+        .payment-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 25px;
+            align-items: start;
+        }
+
+        .payment-card,
+        .payment-summary {
+            background: #fff;
+            border: 1px solid #eadfe2;
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .payment-card h2,
+        .payment-summary h2 {
+            font-size: 19px;
+            margin-bottom: 20px;
+        }
+
+        .payment-method {
+            border: 1px solid #eadfe2;
+            border-radius: 9px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .payment-method:hover {
+            border-color: #d94f70;
+        }
+
+        .payment-method.active {
+            border-color: #d94f70;
+            background: #fff6f8;
+        }
+
+        .payment-method input {
+            accent-color: #d94f70;
+        }
+
+        .payment-icon {
+            font-size: 25px;
+        }
+
+        .payment-method-info {
+            flex: 1;
+        }
+
+        .payment-method-info strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .payment-method-info small {
+            color: #888;
+            font-size: 10px;
+        }
+
+        .payment-details {
+            display: none;
+            margin-top: 18px;
+            padding: 18px;
+            background: #faf7f8;
+            border-radius: 8px;
+        }
+
+        .payment-details.active {
+            display: block;
+        }
+
+        .payment-input {
+            width: 100%;
+            border: 1px solid #ddd4d7;
+            border-radius: 7px;
+            padding: 12px;
+            margin-bottom: 10px;
+            font-size: 13px;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .payment-input:focus {
+            border-color: #d94f70;
+        }
+
+        .card-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .demo-payment-btn {
+            width: 100%;
+            border: 0;
+            border-radius: 7px;
+            background: #d94f70;
+            color: #fff;
+            padding: 14px;
+            margin-top: 18px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .demo-payment-btn:hover {
+            background: #b93d5c;
+        }
+
+        .demo-label {
+            display: inline-block;
+            background: #fff1d6;
+            color: #765d25;
+            padding: 5px 8px;
+            border-radius: 5px;
+            font-size: 9px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .payment-product {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0e8ea;
+        }
+
+        .payment-product-image {
+            width: 48px;
+            height: 48px;
+            border-radius: 7px;
+            background: #fff3f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+        }
+
+        .payment-product-info {
+            flex: 1;
+        }
+
+        .payment-product-info strong {
+            display: block;
+            font-size: 11px;
+        }
+
+        .payment-product-info small {
+            color: #888;
+            font-size: 9px;
+        }
+
+        .payment-product-price {
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 14px;
+            font-size: 13px;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #eadfe2;
+            padding-top: 16px;
+            margin-top: 16px;
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .security-note {
+            margin-top: 15px;
+            color: #777;
+            font-size: 10px;
+            line-height: 1.5;
+        }
+
+        .payment-success {
+            display: none;
+            text-align: center;
+            background: #fff;
+            border: 1px solid #eadfe2;
+            border-radius: 14px;
+            padding: 60px 25px;
+        }
+
+        .success-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: #eaf8ef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .payment-success h2 {
+            margin-bottom: 8px;
+        }
+
+        .payment-success p {
+            color: #777;
+            font-size: 13px;
+        }
+
+        .order-id {
+            color: #d94f70;
+            font-weight: 800;
+            margin: 18px 0 25px;
+        }
+
+        @media (max-width: 800px) {
+            .payment-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .card-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="container top-header">
+
+        <a href="../index.html" class="logo">
+            YASH <span>MART</span>
+        </a>
+
+        <div class="header-actions">
+
+            <a href="wishlist.html" class="header-btn">
+                <span>♡</span>
+                <small>Wishlist</small>
+            </a>
+
+            <a href="cart.html" class="header-btn cart-button">
+                <span>🛒</span>
+                <small>Cart</small>
+                <b id="cartCount">0</b>
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+<main>
+
+<section class="payment-section">
+
+    <div class="container">
+
+        <div class="page-heading">
+
+            <p class="eyebrow">
+                YASH MART
+            </p>
+
+            <h1>
+                Payment
+            </h1>
+
+            <p>
+                Select a payment method to complete your demo order.
+            </p>
+
+        </div>
+
+        <div id="paymentContent" class="payment-layout">
+
+            <div class="payment-card">
+
+                <span class="demo-label">
+                    COLLEGE FAIR DEMO
+                </span>
+
+                <h2>
+                    Select Payment Method
+                </h2>
+
+                <label class="payment-method active">
+
+                    <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="upi"
+                        checked
+                    >
+
+                    <span class="payment-icon">
+                        📱
+                    </span>
+
+                    <span class="payment-method-info">
+                        <strong>UPI</strong>
+                        <small>Pay using UPI</small>
+                    </span>
+
+                </label>
+
+                <label class="payment-method">
+
+                    <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="card"
+                    >
+
+                    <span class="payment-icon">
+                        💳
+                    </span>
+
+                    <span class="payment-method-info">
+                        <strong>Card</strong>
+                        <small>Credit / Debit Card</small>
+                    </span>
+
+                </label>
+
+                <label class="payment-method">
+
+                    <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="cod"
+                    >
+
+                    <span class="payment-icon">
+                        📦
+                    </span>
+
+                    <span class="payment-method-info">
+                        <strong>Cash on Delivery</strong>
+                        <small>Pay when order is delivered</small>
+                    </span>
+
+                </label>
+
+                <div
+                    id="upiDetails"
+                    class="payment-details active">
+
+                    <input
+                        id="upiId"
+                        class="payment-input"
+                        placeholder="Enter demo UPI ID"
+                        value="demo@yashmart"
+                    >
+
+                    <small>
+                        Demo only — no real payment will be processed.
+                    </small>
+
+                </div>
+
+                <div
+                    id="cardDetails"
+                    class="payment-details">
+
+                    <input
+                        id="cardNumber"
+                        class="payment-input"
+                        placeholder="Card Number"
+                        maxlength="16"
+                    >
+
+                    <div class="card-row">
+
+                        <input
+                            id="expiry"
+                            class="payment-input"
+                            placeholder="MM/YY"
+                            maxlength="5"
+                        >
+
+                        <input
+                            id="cvv"
+                            class="payment-input"
+                            placeholder="CVV"
+                            maxlength="3"
+                        >
+
+                    </div>
+
+                    <input
+                        id="cardName"
+                        class="payment-input"
+                        placeholder="Cardholder Name"
+                    >
+
+                    <small>
+                        Use any demo card details. No real transaction occurs.
+                    </small>
+
+                </div>
+
+                <div
+                    id="codDetails"
+                    class="payment-details">
+
+                    <p>
+                        Your order will be placed with
+                        <strong>Cash on Delivery</strong>.
+                    </p>
+
+                </div>
+
+                <button
+                    id="payBtn"
+                    class="demo-payment-btn">
+                    Pay Now
+                </button>
+
+                <p class="security-note">
+                    🔒 This is a college-fair demonstration.
+                    No real money or bank/card transaction is processed.
+                </p>
+
+            </div>
+
+            <aside class="payment-summary">
+
+                <h2>
+                    Order Summary
+                </h2>
+
+                <div id="paymentProducts"></div>
+
+                <div class="summary-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong id="paymentSubtotal">
+                        ₹0
+                    </strong>
+
+                </div>
+
+                <div class="summary-row">
+
+                    <span>
+                        Delivery
+                    </span>
+
+                    <strong>
+                        FREE
+                    </strong>
+
+                </div>
+
+                <div class="summary-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong id="paymentTotal">
+                        ₹0
+                    </strong>
+
+                </div>
+
+            </aside>
+
+        </div>
+
+        <div id="paymentSuccess" class="payment-success">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h2>
+                Payment Successful!
+            </h2>
+
+            <p>
+                Your YASH MART order has been confirmed.
+            </p>
+
+            <div class="order-id">
+                Order ID:
+                <span id="successOrderId"></span>
+            </div>
+
+            <a
+                href="../index.html"
+                class="primary-btn">
+                Continue Shopping
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="../data/products.js"></script>
+<script src="../js/cart.js"></script>
+
+<script>
+
+const checkoutData =
+    JSON.parse(
+        localStorage.getItem("yashMartCheckout")
+    );
+
+const paymentProducts =
+    document.getElementById("paymentProducts");
+
+const paymentSubtotal =
+    document.getElementById("paymentSubtotal");
+
+const paymentTotal =
+    document.getElementById("paymentTotal");
+
+const paymentContent =
+    document.getElementById("paymentContent");
+
+const paymentSuccess =
+    document.getElementById("paymentSuccess");
+
+const payBtn =
+    document.getElementById("payBtn");
+
+function renderPaymentSummary() {
+
+    if (!checkoutData || !checkoutData.products) {
+
+        paymentContent.innerHTML = `
+            <div class="payment-card">
+                <h2>No checkout found</h2>
+                <p>Please go back and start checkout again.</p>
+                <br>
+                <a href="../index.html" class="primary-btn">
+                    Go Shopping
+                </a>
+            </div>
+        `;
+
+        return;
+    }
+
+    paymentProducts.innerHTML = "";
+
+    checkoutData.products.forEach(product => {
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "payment-product";
+
+        item.innerHTML = `
+
+            <div class="payment-product-image">
+                ${product.image}
+            </div>
+
+            <div class="payment-product-info">
+
+                <strong>
+                    ${product.name}
+                </strong>
+
+                <small>
+                    ${product.brand} · Qty ${product.quantity}
+                </small>
+
+            </div>
+
+            <div class="payment-product-price">
+                ${formatCartPrice(
+                    product.price * product.quantity
+                )}
+            </div>
+
+        `;
+
+        paymentProducts.appendChild(item);
+    });
+
+    paymentSubtotal.textContent =
+        formatCartPrice(checkoutData.total);
+
+    paymentTotal.textContent =
+        formatCartPrice(checkoutData.total);
+}
+
+document
+    .querySelectorAll('input[name="paymentMethod"]')
+    .forEach(input => {
+
+        input.addEventListener("change", () => {
+
+            document
+                .querySelectorAll(".payment-method")
+                .forEach(method => {
+                    method.classList.remove("active");
+                });
+
+            input
+                .closest(".payment-method")
+                .classList.add("active");
+
+            document
+                .querySelectorAll(".payment-details")
+                .forEach(details => {
+                    details.classList.remove("active");
+                });
+
+            if (input.value === "upi") {
+                document
+                    .getElementById("upiDetails")
+                    .classList.add("active");
+
+                payBtn.textContent = "Pay Now";
+            }
+
+            if (input.value === "card") {
+                document
+                    .getElementById("cardDetails")
+                    .classList.add("active");
+
+                payBtn.textContent = "Pay Now";
+            }
+
+            if (input.value === "cod") {
+                document
+                    .getElementById("codDetails")
+                    .classList.add("active");
+
+                payBtn.textContent = "Place Order";
+            }
+
+        });
+
+    });
+
+function generateOrderId() {
+
+    return "YM" +
+        Math.floor(
+            100000 + Math.random() * 900000
+        );
+
+}
+
+function completeOrder(paymentMethod) {
+
+    const order = {
+
+        orderId: generateOrderId(),
+
+        customer: checkoutData.customer,
+
+        address: checkoutData.address,
+
+        products: checkoutData.products,
+
+        total: checkoutData.total,
+
+        paymentMethod: paymentMethod,
+
+        paymentStatus:
+            paymentMethod === "cod"
+                ? "Pending"
+                : "Paid",
+
+        orderStatus: "Confirmed",
+
+        createdAt:
+            new Date().toISOString()
+
+    };
+
+    const orders =
+        JSON.parse(
+            localStorage.getItem("yashMartOrders")
+        ) || [];
+
+    orders.push(order);
+
+    localStorage.setItem(
+        "yashMartOrders",
+        JSON.stringify(orders)
+    );
+
+    localStorage.setItem(
+        "yashMartLastOrder",
+        JSON.stringify(order)
+    );
+
+    localStorage.removeItem(
+        "yashMartCart"
+    );
+
+    localStorage.removeItem(
+        "yashMartCheckout"
+    );
+
+    updateCartCount();
+
+    document
+        .getElementById("successOrderId")
+        .textContent = order.orderId;
+
+    paymentContent.style.display =
+        "none";
+
+    paymentSuccess.style.display =
+        "block";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+payBtn.addEventListener("click", () => {
+
+    if (!checkoutData) {
+        showToast("Checkout information not found");
+        return;
+    }
+
+    const method =
+        document.querySelector(
+            'input[name="paymentMethod"]:checked'
+        ).value;
+
+    if (method === "upi") {
+
+        const upi =
+            document
+                .getElementById("upiId")
+                .value.trim();
+
+        if (!upi) {
+            showToast("Enter UPI ID");
+            return;
+        }
+
+    }
+
+    if (method === "card") {
+
+        const card =
+            document
+                .getElementById("cardNumber")
+                .value.trim();
+
+        const expiry =
+            document
+                .getElementById("expiry")
+                .value.trim();
+
+        const cvv =
+            document
+                .getElementById("cvv")
+                .value.trim();
+
+        const cardName =
+            document
+                .getElementById("cardName")
+                .value.trim();
+
+        if (
+            !/^[0-9]{16}$/.test(card) ||
+            !/^[0-9]{2}\/[0-9]{2}$/.test(expiry) ||
+            !/^[0-9]{3}$/.test(cvv) ||
+            !cardName
+        ) {
+            showToast("Enter valid demo card details");
+            return;
+        }
+
+    }
+
+    payBtn.disabled = true;
+    payBtn.textContent = "Processing...";
+
+    setTimeout(() => {
+
+        completeOrder(method);
+
+    }, 1200);
+
+});
+
+renderPaymentSummary();
+updateCartCount();
+
+</script>
+
+</body>
+</html>

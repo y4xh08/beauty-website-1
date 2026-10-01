@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="YASH MART Checkout">
+
+    <title>Checkout | YASH MART</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/cart.css">
+
+    <style>
+        .checkout-section {
+            padding: 55px 0 80px;
+            background: #fcfafb;
+            min-height: 75vh;
+        }
+
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 25px;
+            align-items: start;
+        }
+
+        .checkout-card {
+            background: #ffffff;
+            border: 1px solid #eadfe2;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 18px;
+        }
+
+        .checkout-card h2 {
+            font-size: 19px;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            border: 1px solid #ded5d8;
+            border-radius: 7px;
+            padding: 12px;
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+            background: #fff;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #d94f70;
+        }
+
+        .form-group textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .checkout-summary {
+            background: #ffffff;
+            border: 1px solid #eadfe2;
+            border-radius: 12px;
+            padding: 23px;
+            position: sticky;
+            top: 120px;
+        }
+
+        .checkout-summary h2 {
+            font-size: 19px;
+            margin-bottom: 18px;
+        }
+
+        .checkout-product {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0e8ea;
+        }
+
+        .checkout-product-image {
+            width: 55px;
+            height: 55px;
+            border-radius: 8px;
+            background: #fff3f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+            flex-shrink: 0;
+        }
+
+        .checkout-product-info {
+            flex: 1;
+        }
+
+        .checkout-product-info h3 {
+            font-size: 12px;
+            margin-bottom: 3px;
+        }
+
+        .checkout-product-info p {
+            color: #888;
+            font-size: 10px;
+        }
+
+        .checkout-product-price {
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .checkout-summary-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-top: 14px;
+        }
+
+        .checkout-total {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #eadfe2;
+            margin-top: 17px;
+            padding-top: 17px;
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .place-order-btn {
+            width: 100%;
+            border: 0;
+            border-radius: 7px;
+            background: #d94f70;
+            color: #ffffff;
+            padding: 14px;
+            margin-top: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .place-order-btn:hover {
+            background: #b93d5c;
+        }
+
+        .demo-note {
+            background: #fff7e8;
+            border: 1px solid #f1dfb5;
+            border-radius: 8px;
+            padding: 11px;
+            margin-top: 15px;
+            font-size: 11px;
+            color: #755d27;
+        }
+
+        .order-success {
+            display: none;
+            text-align: center;
+            background: #ffffff;
+            border: 1px solid #eadfe2;
+            border-radius: 14px;
+            padding: 60px 25px;
+        }
+
+        .success-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: #eaf8ef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .order-success h2 {
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .order-success p {
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .order-id {
+            font-weight: 800;
+            color: #d94f70;
+            margin: 15px 0 25px;
+        }
+
+        .success-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .secondary-btn {
+            display: inline-block;
+            padding: 11px 18px;
+            border: 1px solid #eadfe2;
+            border-radius: 7px;
+            color: #555;
+            background: white;
+            font-size: 12px;
+        }
+
+        @media (max-width: 850px) {
+            .checkout-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .checkout-summary {
+                position: static;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="container top-header">
+
+        <a href="../index.html" class="logo">
+            YASH <span>MART</span>
+        </a>
+
+        <div class="search-box">
+            <input
+                type="text"
+                placeholder="Search beauty products..."
+            >
+            <button>⌕</button>
+        </div>
+
+        <div class="header-actions">
+
+            <a href="wishlist.html" class="header-btn">
+                <span>♡</span>
+                <small>Wishlist</small>
+            </a>
+
+            <a href="cart.html" class="header-btn cart-button">
+                <span>🛒</span>
+                <small>Cart</small>
+                <b id="cartCount">0</b>
+            </a>
+
+        </div>
+
+    </div>
+
+    <nav class="nav">
+
+        <div class="container nav-inner">
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="../index.html#categories">
+                Categories
+            </a>
+
+            <a href="../index.html#offers">
+                Offers
+            </a>
+
+        </div>
+
+    </nav>
+
+</header>
+
+<main>
+
+<section class="checkout-section">
+
+    <div class="container">
+
+        <div class="page-heading">
+
+            <p class="eyebrow">
+                YASH MART
+            </p>
+
+            <h1>
+                Checkout
+            </h1>
+
+            <p>
+                Enter your delivery details to place your order.
+            </p>
+
+        </div>
+
+        <div id="checkoutContent" class="checkout-layout">
+
+            <div>
+
+                <div class="checkout-card">
+
+                    <h2>
+                        👤 Customer Details
+                    </h2>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label for="customerName">
+                                Full Name *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="customerName"
+                                placeholder="Enter your full name"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="mobile">
+                                Mobile Number *
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="mobile"
+                                placeholder="10-digit mobile number"
+                                maxlength="10"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="form-group full">
+
+                            <label for="email">
+                                Email Address
+                            </label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                placeholder="example@email.com"
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="checkout-card">
+
+                    <h2>
+                        📍 Delivery Address
+                    </h2>
+
+                    <div class="form-grid">
+
+                        <div class="form-group full">
+
+                            <label for="address">
+                                House / Street / Area *
+                            </label>
+
+                            <textarea
+                                id="address"
+                                placeholder="Enter your complete address"
+                                required
+                            ></textarea>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="city">
+                                City *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="city"
+                                placeholder="Enter city"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="state">
+                                State *
+                            </label>
+
+                            <select id="state">
+
+                                <option value="">
+                                    Select State
+                                </option>
+
+                                <option>
+                                    Gujarat
+                                </option>
+
+                                <option>
+                                    Maharashtra
+                                </option>
+
+                                <option>
+                                    Rajasthan
+                                </option>
+
+                                <option>
+                                    Delhi
+                                </option>
+
+                                <option>
+                                    Karnataka
+                                </option>
+
+                                <option>
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="pincode">
+                                Pincode *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="pincode"
+                                placeholder="6-digit pincode"
+                                maxlength="6"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <aside class="checkout-summary">
+
+                <h2>
+                    Order Summary
+                </h2>
+
+                <div id="checkoutProducts"></div>
+
+                <div class="checkout-summary-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong id="checkoutSubtotal">
+                        ₹0
+                    </strong>
+
+                </div>
+
+                <div class="checkout-summary-row">
+
+                    <span>
+                        Delivery
+                    </span>
+
+                    <strong>
+                        FREE
+                    </strong>
+
+                </div>
+
+                <div class="checkout-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong id="checkoutTotal">
+                        ₹0
+                    </strong>
+
+                </div>
+
+                <button
+                      id="placeOrderBtn"
+                     class="place-order-btn">
+                     Continue to Payment
+                 </button>
+
+                <div class="demo-note">
+                    🎓 <strong>College Fair Demo</strong><br>
+                    Payment will be added in the next part.
+                </div>
+
+            </aside>
+
+        </div>
+
+        <div id="orderSuccess" class="order-success">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h2>
+                Order Placed Successfully!
+            </h2>
+
+            <p>
+                Thank you for shopping with YASH MART.
+            </p>
+
+            <p>
+                Your demo order has been created.
+            </p>
+
+            <div class="order-id">
+                Order ID: <span id="orderId"></span>
+            </div>
+
+            <div class="success-buttons">
+
+                <a
+                    href="../index.html"
+                    class="primary-btn">
+                    Continue Shopping
+                </a>
+
+                <a
+                    href="cart.html"
+                    class="secondary-btn">
+                    View Cart
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="../data/products.js"></script>
+<script src="../js/cart.js"></script>
+
+<script>
+
+const checkoutProducts =
+    document.getElementById("checkoutProducts");
+
+const checkoutSubtotal =
+    document.getElementById("checkoutSubtotal");
+
+const checkoutTotal =
+    document.getElementById("checkoutTotal");
+
+const checkoutContent =
+    document.getElementById("checkoutContent");
+
+const orderSuccess =
+    document.getElementById("orderSuccess");
+
+const placeOrderBtn =
+    document.getElementById("placeOrderBtn");
+
+function renderCheckout() {
+
+    const cart = getCart();
+
+    if (cart.length === 0) {
+
+        checkoutContent.innerHTML = `
+            <div class="checkout-card">
+                <h2>Your cart is empty</h2>
+                <p>
+                    Please add products before checkout.
+                </p>
+
+                <a
+                    href="../index.html#categories"
+                    class="primary-btn">
+                    Start Shopping
+                </a>
+            </div>
+        `;
+
+        return;
+    }
+
+    checkoutProducts.innerHTML = "";
+
+    cart.forEach(product => {
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "checkout-product";
+
+        item.innerHTML = `
+
+            <div class="checkout-product-image">
+                ${product.image}
+            </div>
+
+            <div class="checkout-product-info">
+
+                <h3>
+                    ${product.name}
+                </h3>
+
+                <p>
+                    ${product.brand} · Qty ${product.quantity}
+                </p>
+
+            </div>
+
+            <div class="checkout-product-price">
+                ${formatCartPrice(
+                    product.price * product.quantity
+                )}
+            </div>
+        `;
+
+        checkoutProducts.appendChild(item);
+    });
+
+    const total = getCartTotal();
+
+    checkoutSubtotal.textContent =
+        formatCartPrice(total);
+
+    checkoutTotal.textContent =
+        formatCartPrice(total);
+}
+
+function getInputValue(id) {
+
+    return document
+        .getElementById(id)
+        .value
+        .trim();
+}
+
+function validateCheckout() {
+
+    const name =
+        getInputValue("customerName");
+
+    const mobile =
+        getInputValue("mobile");
+
+    const address =
+        getInputValue("address");
+
+    const city =
+        getInputValue("city");
+
+    const state =
+        getInputValue("state");
+
+    const pincode =
+        getInputValue("pincode");
+
+    if (!name) {
+        showToast("Please enter your name");
+        return false;
+    }
+
+    if (!/^[0-9]{10}$/.test(mobile)) {
+        showToast("Enter a valid 10-digit mobile number");
+        return false;
+    }
+
+    if (!address) {
+        showToast("Please enter your address");
+        return false;
+    }
+
+    if (!city) {
+        showToast("Please enter your city");
+        return false;
+    }
+
+    if (!state) {
+        showToast("Please select your state");
+        return false;
+    }
+
+    if (!/^[0-9]{6}$/.test(pincode)) {
+        showToast("Enter a valid 6-digit pincode");
+        return false;
+    }
+
+    return true;
+}
+
+function generateOrderId() {
+
+    const randomNumber =
+        Math.floor(100000 + Math.random() * 900000);
+
+    return "YM" + randomNumber;
+}
+
+placeOrderBtn.addEventListener("click", () => {
+
+    if (getCart().length === 0) {
+        showToast("Your cart is empty");
+        return;
+    }
+
+    if (!validateCheckout()) {
+        return;
+    }
+
+    const checkoutData = {
+
+        customer: {
+            name: getInputValue("customerName"),
+            mobile: getInputValue("mobile"),
+            email: getInputValue("email")
+        },
+
+        address: {
+            address: getInputValue("address"),
+            city: getInputValue("city"),
+            state: getInputValue("state"),
+            pincode: getInputValue("pincode")
+        },
+
+        products: getCart(),
+
+        total: getCartTotal()
+
+    };
+
+    localStorage.setItem(
+        "yashMartCheckout",
+        JSON.stringify(checkoutData)
+    );
+
+    window.location.href = "payment.html";
+});
+
+renderCheckout();
+updateCartCount();
+
+</script>
+
+</body>
+</html>

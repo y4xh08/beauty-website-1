@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist | YASH MART</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/cart.css">
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="container top-header">
+
+        <a href="../index.html" class="logo">
+            YASH <span>MART</span>
+        </a>
+
+        <div class="search-box">
+            <input
+                type="text"
+                placeholder="Search beauty products..."
+            >
+            <button>⌕</button>
+        </div>
+
+        <div class="header-actions">
+
+            <a href="wishlist.html" class="header-btn">
+                <span>♡</span>
+                <small>Wishlist</small>
+            </a>
+
+            <a href="cart.html" class="header-btn cart-button">
+                <span>🛒</span>
+                <small>Cart</small>
+                <b id="cartCount">0</b>
+            </a>
+
+        </div>
+
+    </div>
+
+    <nav class="nav">
+
+        <div class="container nav-inner">
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="../index.html#categories">
+                Categories
+            </a>
+
+            <a href="../index.html#featured">
+                Featured
+            </a>
+
+            <a href="../index.html#offers">
+                Offers
+            </a>
+
+        </div>
+
+    </nav>
+
+</header>
+
+<main>
+
+<section class="cart-section">
+
+    <div class="container">
+
+        <div class="page-heading">
+
+            <p class="eyebrow">
+                YASH MART
+            </p>
+
+            <h1>
+                My Wishlist
+            </h1>
+
+            <p id="wishlistText">
+                Your saved beauty products
+            </p>
+
+        </div>
+
+        <div
+            id="wishlistEmpty"
+            class="empty-state">
+
+            <div class="empty-icon">
+                ♡
+            </div>
+
+            <h2>
+                Your wishlist is empty
+            </h2>
+
+            <p>
+                Save products you love here.
+            </p>
+
+            <a
+                href="../index.html#categories"
+                class="primary-btn">
+                Explore Products
+            </a>
+
+        </div>
+
+        <div
+            id="wishlistGrid"
+            class="wishlist-grid">
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="../data/products.js"></script>
+<script src="../js/cart.js"></script>
+
+<script>
+
+const wishlistGrid =
+    document.getElementById("wishlistGrid");
+
+const wishlistEmpty =
+    document.getElementById("wishlistEmpty");
+
+const wishlistText =
+    document.getElementById("wishlistText");
+
+function renderWishlist() {
+
+    const wishlist =
+        getWishlist();
+
+    if (wishlist.length === 0) {
+
+        wishlistEmpty.style.display =
+            "block";
+
+        wishlistGrid.style.display =
+            "none";
+
+        wishlistText.textContent =
+            "Your wishlist is currently empty";
+
+        return;
+    }
+
+    wishlistEmpty.style.display =
+        "none";
+
+    wishlistGrid.style.display =
+        "grid";
+
+    wishlistText.textContent =
+        `${wishlist.length} saved product(s)`;
+
+    wishlistGrid.innerHTML = "";
+
+    wishlist.forEach(product => {
+
+        const card =
+            document.createElement("article");
+
+        card.className =
+            "wishlist-card";
+
+        card.innerHTML = `
+
+            <div class="wishlist-image">
+                ${product.image}
+            </div>
+
+            <div class="wishlist-info">
+
+                <span class="cart-brand">
+                    ${product.brand}
+                </span>
+
+                <h3>
+                    ${product.name}
+                </h3>
+
+                <p>
+                    ${product.type}
+                </p>
+
+                <strong>
+                    ${formatCartPrice(product.price)}
+                </strong>
+
+                <div class="wishlist-actions">
+
+                    <button
+                        class="wishlist-cart-btn"
+                        onclick="moveToCart(${product.id})">
+                        Add to Cart
+                    </button>
+
+                    <button
+                        class="wishlist-remove-btn"
+                        onclick="removeWishlistItem(${product.id})">
+                        Remove
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+
+        wishlistGrid.appendChild(card);
+    });
+}
+
+function moveToCart(productId) {
+
+    addToCart(productId);
+
+    removeFromWishlist(productId);
+
+    renderWishlist();
+}
+
+function removeWishlistItem(productId) {
+
+    removeFromWishlist(productId);
+
+    showToast("Removed from wishlist");
+
+    renderWishlist();
+}
+
+renderWishlist();
+updateCartCount();
+
+</script>
+
+</body>
+</html>

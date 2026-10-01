@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — Glow Cart</title>
+    <link rel="stylesheet" href="../css/auth.css">
+</head>
+<body>
+
+<div class="auth-page">
+
+    <div class="auth-card">
+
+        <div class="brand">
+            <h1>Glow Cart</h1>
+            <p>Beauty & Beyond</p>
+        </div>
+
+        <div class="auth-heading">
+            <h2>Login Now</h2>
+        </div>
+
+        <form id="loginForm">
+
+            <div class="input-group">
+                <input
+                    type="text"
+                    id="loginUsername"
+                    placeholder="User Name"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Password"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="login-btn">
+                Login
+            </button>
+
+        </form>
+
+        <a href="register.html" class="register-btn">
+            Registration
+        </a>
+
+        <a href="#" id="forgotPassword" class="forgot-password">
+            Forgot Password?
+        </a>
+
+        <p id="loginMessage" class="auth-message"></p>
+
+    </div>
+
+</div>
+
+<script src="../js/auth.js"></script>
+
+</body>
+</html>
